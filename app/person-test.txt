@@ -1,0 +1,1 @@
+$ curl -fvki -H 'Content-Type: application/json' -X POST -d '{ "firstName" : "Karl", "lastName" : "Malone }' http://person-pwr-demo.apps.hub.prod.ocp.example.com/demo/persons

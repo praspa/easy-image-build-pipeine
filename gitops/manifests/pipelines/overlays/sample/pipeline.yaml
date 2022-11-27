@@ -1,0 +1,70 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  labels:
+    pipeline.openshift.io/type: kubernetes
+  name: easy-image-build-pipeline
+spec:
+  resources:
+  - name: source
+    type: git
+  - name: image-tomcat-cache
+    type: image
+  - name: image-tomcat-internal-registry
+    type: image
+  - name: image-tomcat-quay
+    type: image
+  params:
+  - name: STORAGE_DRIVER
+    type: string
+    default: vfs
+  - name: commit_id
+    type: string
+  tasks:
+  - name: build-application-image
+    params:
+      - name: STORAGE_DRIVER
+        value: $(params.STORAGE_DRIVER)
+      - name: commit_id
+        value: $(params.commit_id)
+      - name: dockerfile_sub_path
+        value: "app/docker/Dockerfile"
+    resources:
+      inputs:
+      - name: source
+        resource: source
+      outputs:
+      - name: cache-image
+        resource: image-tomcat-cache
+      - name: internal-registry-image
+        resource: image-tomcat-internal-registry
+    taskRef:
+      kind: Task
+      name: build
+  - name: push-quay
+    params:
+      - name: STORAGE_DRIVER
+        value: $(params.STORAGE_DRIVER)
+    resources:
+      inputs:
+      - name: source
+        resource: source
+      outputs:
+      - name: cache-image
+        resource: image-tomcat-cache
+      - name: quay-image
+        resource: image-tomcat-quay
+    taskRef:
+      kind: Task
+      name: quay-push
+    runAfter:
+      - build-application-image
+  finally:
+  - name: clear-buildah-repo-end
+    params:
+      - name: STORAGE_DRIVER
+        value: $(params.STORAGE_DRIVER)
+    taskRef:
+      kind: Task
+      name: clear-buildah-repo
+

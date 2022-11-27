@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1 
+kind: Task 
+metadata:
+  name: apply-manifests 
+spec: 
+  workspaces:
+  - name: source
+  params:
+    - name: manifest_dir
+      description: The directory in source that contains yaml manifests
+      type: string
+      default: "k8s"
+  steps:
+    - name: apply
+      image: registry.redhat.io/openshift4/ose-cli:v4.10.0-202204011138.p0.g3e24949.assembly.stream
+      workingDir: /workspace/source
+      command: ["/bin/bash", "-c"]
+      args:
+        - |-
+          echo Applying manifests in $(params.manifest_dir) directory
+          oc apply -f $(params.manifest_dir)
+          echo -----------------------------------

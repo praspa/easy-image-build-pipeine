@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: image-tomcat-quay
+spec:
+  params:
+  - name: url
+    value: quay.io/patrickraspante/sample:1.0
+  type: image 

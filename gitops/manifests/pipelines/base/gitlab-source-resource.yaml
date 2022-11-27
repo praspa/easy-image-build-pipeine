@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: dockerfiles
+spec:
+  params:
+  - name: url
+    value: git@github.com:praspa/easy-image-build-pipeine.git
+  - name: revision
+    value: main
+  type: git

@@ -1,0 +1,50 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../base
+
+resources:
+- image-tomcat-cache-resource.yaml
+- image-tomcat-internal-registry-resource.yaml
+- image-tomcat-quay-resource.yaml
+- pipeline.yaml
+
+patches:
+  - target:
+      namespace: pwr-demo
+      group: tekton.dev
+      version: v1beta1
+      kind: Task
+      name: build
+    patch: |-
+      - op: replace
+        path: /spec/steps/0/image
+        value: registry.redhat.io/rhel8/buildah:8.7-5
+      - op: replace
+        path: /spec/steps/1/image
+        value: registry.redhat.io/rhel8/buildah:8.7-5
+  - target:
+      namespace: pwr-demo
+      group: tekton.dev
+      version: v1beta1
+      kind: Task
+      name: quay-push
+    patch: |-
+      - op: replace
+        path: /spec/steps/0/image
+        value: registry.redhat.io/rhel8/buildah:8.7-5
+  - target:
+      namespace: pwr-demo
+      group: tekton.dev
+      version: v1beta1
+      kind: Task
+      name: clear-buildah-repo
+    patch: |-
+      - op: replace
+        path: /spec/steps/0/image
+        value: registry.redhat.io/rhel8/buildah:8.7-5
+
+
+
+

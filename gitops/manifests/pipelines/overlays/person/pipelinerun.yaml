@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: easy-image-build-pr-
+spec:
+  pipelineRef:
+    name: easy-image-build-pipeline
+  resources:
+    - name: source
+      resourceRef:
+        name: dockerfiles
+    - name: image-tomcat-cache
+      resourceRef:
+        name: image-tomcat-cache
+    - name: image-tomcat-internal-registry
+      resourceRef:
+        name: image-tomcat-internal-registry
+    - name: image-tomcat-quay
+      resourceRef:
+        name: image-tomcat-quay
+  params:
+    - name: commit_id
+      value: ""
