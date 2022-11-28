@@ -52,6 +52,9 @@ spec:
       - name: manifest_dir
         value: $(params.manifest_dir)
     resources:
+      inputs:
+      - name: source
+        resource: source
     taskRef:
       kind: Task
       name: apply-manifests
