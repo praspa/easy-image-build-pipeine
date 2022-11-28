@@ -32,6 +32,8 @@ spec:
         type: image
       - name: internal-registry-image
         type: image
+      - name: quay-image
+        type: image
   steps:
     - name: build
       command:
@@ -69,6 +71,24 @@ spec:
         - '--tls-verify=$(params.TLSVERIFY)'
         - $(resources.outputs.cache-image.url)
         - 'docker://$(resources.outputs.internal-registry-image.url)'
+      image: registry.redhat.io/rhel8/buildah:8.7-5
+      resources: {}
+      volumeMounts:
+        - name: pipeline-cache
+          mountPath: /var/lib/containers
+        - name: quay-secret
+          mountPath: /etc/secret-volume
+          readOnly: true
+    - name: push-quay
+      command:
+        - buildah
+        - push
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--tls-verify=$(params.TLSVERIFY)'
+        - '--authfile'
+        - '/etc/secret-volume/config.json'
+        - $(resources.outputs.cache-image.url)
+        - 'docker://$(resources.outputs.quay-image.url)'
       image: registry.redhat.io/rhel8/buildah:8.7-5
       resources: {}
       volumeMounts:

@@ -40,27 +40,29 @@ spec:
         resource: image-tomcat-cache
       - name: internal-registry-image
         resource: image-tomcat-internal-registry
-    taskRef:
-      kind: Task
-      name: build
-  - name: push-quay
-    params:
-      - name: STORAGE_DRIVER
-        value: $(params.STORAGE_DRIVER)
-    resources:
-      inputs:
-      - name: source
-        resource: source
-      outputs:
-      - name: cache-image
-        resource: image-tomcat-cache
       - name: quay-image
         resource: image-tomcat-quay
     taskRef:
       kind: Task
-      name: quay-push
-    runAfter:
-      - build-application-image
+      name: build
+#  - name: push-quay
+#    params:
+#      - name: STORAGE_DRIVER
+#        value: $(params.STORAGE_DRIVER)
+#    resources:
+#      inputs:
+#      - name: source
+#        resource: source
+#      outputs:
+#      - name: cache-image
+#        resource: image-tomcat-cache
+#      - name: quay-image
+#        resource: image-tomcat-quay
+#    taskRef:
+#      kind: Task
+#      name: quay-push
+#    runAfter:
+#      - build-application-image
   finally:
   - name: clear-buildah-repo-end
     params:
