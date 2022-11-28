@@ -1,4 +1,4 @@
-FROM registry.redhat.io/jboss-webserver-5/jws57-openjdk11-openshift-rhel8:5.7.0-6
+FROM image-registry.openshift-image-registry.svc:5000/openshift/jws57-openjdk11-openshift-rhel8:5.7.0-6
 
 LABEL "io.openshift.s2i.build.image"="registry.redhat.io/jboss-webserver-5/jws57-openjdk11-openshift-rhel8:5.7.0-6" \
       "io.openshift.s2i.build.source-location"="."
