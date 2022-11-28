@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+  labels:
+    app: person
+    app.kubernetes.io/component: person
+    app.kubernetes.io/instance: person
+  name: person
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: person
+    weight: 100
+  wildcardPolicy: None

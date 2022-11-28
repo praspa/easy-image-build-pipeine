@@ -20,6 +20,8 @@ spec:
     default: vfs
   - name: commit_id
     type: string
+  - name: manifest_dir
+    type: string
   tasks:
   - name: build-application-image
     params:
@@ -45,6 +47,16 @@ spec:
     taskRef:
       kind: Task
       name: build
+  - name: deploy-test-app
+    params:
+      - name: manifest_dir
+        value: $(params.manifest_dir)
+    resources:
+    taskRef:
+      kind: Task
+      name: apply-manifests
+    runAfter:
+      - build-application-image
 #  - name: push-quay
 #    params:
 #      - name: STORAGE_DRIVER

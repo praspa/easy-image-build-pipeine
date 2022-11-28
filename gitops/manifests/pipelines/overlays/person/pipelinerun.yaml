@@ -21,3 +21,5 @@ spec:
   params:
     - name: commit_id
       value: ""
+    - name: manifest_dir
+      value: "app/gitops/manifests/base"

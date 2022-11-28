@@ -18,5 +18,5 @@ spec:
       args:
         - |-
           echo Applying manifests in $(params.manifest_dir) directory
-          oc apply -f $(params.manifest_dir)
+          oc apply -k $(params.manifest_dir)
           echo -----------------------------------
