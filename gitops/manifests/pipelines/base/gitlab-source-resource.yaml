@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
   - name: url
-    value: git@github.com:praspa/easy-image-build-pipeine.git
+    value: git@github.com:praspa/easy-image-build-pipeline.git
   - name: revision
     value: main
   type: git
