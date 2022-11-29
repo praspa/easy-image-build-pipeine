@@ -24,7 +24,7 @@ spec:
     - name: manifest_dir
       value: "app/gitops/manifests/base"
     - name: test_url
-      value: "http://person-pwr-demo.apps.pwrpipelines.lab.upshift.rdu2.redhat.com/demo/persons/1"
+      value: "http://person-pwr-demo.apps.pwrpipelines.lab.upshift.rdu2.redhat.com/demo/persons"
     - name: test_options
       value: []
 

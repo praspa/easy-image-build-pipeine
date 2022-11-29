@@ -64,18 +64,37 @@ spec:
       name: apply-manifests
     runAfter:
       - build-application-image
-  - name: curl-test-app
+  - name: curl-load-app
     params:
       - name: url
-        value: $(params.test_url)
+        value: "$(params.test_url)"
       - name: options
-        value: $(params.test_options)
+        value:
+          - "-fvi"
+          - "-H"
+          - 'Content-Type: application/json'
+          - "-X"
+          - "POST"
+          - "-d"
+          - '{ "firstName" : "Karl", "lastName" : "Malone" }'
     resources:
     taskRef:
       kind: Task
       name: curl
     runAfter:
       - deploy-test-app
+  - name: curl-test-app
+    params:
+      - name: url
+        value: "$(params.test_url)/1"
+      - name: options
+        value: []
+    resources:
+    taskRef:
+      kind: Task
+      name: curl
+    runAfter:
+      - curl-load-app
 #  - name: push-quay
 #    params:
 #      - name: STORAGE_DRIVER
