@@ -1,1 +1,2 @@
-$ curl -fvki -H 'Content-Type: application/json' -X POST -d '{ "firstName" : "Karl", "lastName" : "Malone }' http://person-pwr-demo.apps.hub.prod.ocp.example.com/demo/persons
+curl -fvki -H 'Content-Type: application/json' -X POST -d '{ "firstName" : "Karl", "lastName" : "Malone" }' http://person-pwr-demo.apps.pwrpipelines.lab.upshift.rdu2.redhat.com/demo/persons
+curl   http://person-pwr-demo.apps.pwrpipelines.lab.upshift.rdu2.redhat.com/demo/persons/1

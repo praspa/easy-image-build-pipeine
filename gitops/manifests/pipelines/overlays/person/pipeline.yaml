@@ -22,6 +22,10 @@ spec:
     type: string
   - name: manifest_dir
     type: string
+  - name: test_url
+    type: string
+  - name: test_options
+    type: array
   tasks:
   - name: build-application-image
     params:
@@ -60,6 +64,18 @@ spec:
       name: apply-manifests
     runAfter:
       - build-application-image
+  - name: curl-test-app
+    params:
+      - name: url
+        value: $(params.test_url)
+      - name: options
+        value: $(params.test_options)
+    resources:
+    taskRef:
+      kind: Task
+      name: curl
+    runAfter:
+      - deploy-test-app
 #  - name: push-quay
 #    params:
 #      - name: STORAGE_DRIVER

@@ -11,3 +11,4 @@ resources:
 - quay-secret.yaml
 - quay-push-task.yaml
 - apply-manifests-task.yaml
+- curl-task.yaml
